@@ -13,5 +13,4 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Integer> {
 
     Optional<Categoria> findById(Integer id);
 
-    void save(List<Categoria> asList);
 }
