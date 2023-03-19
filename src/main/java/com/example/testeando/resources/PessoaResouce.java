@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/pessoas")
@@ -20,7 +19,7 @@ public class PessoaResouce {
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public ResponseEntity<?> listar(@PathVariable Integer id){
-        Optional<Pessoa> obj = pessoaservice.buscar(id);
+        Pessoa obj = pessoaservice.buscar(id);
         return ResponseEntity.ok().body(obj);
     }
 
