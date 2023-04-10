@@ -2,8 +2,10 @@ package com.example.testeando.domain;
 
 import com.example.testeando.domain.enums.EstadoPagamento;
 
+import javax.persistence.Entity;
 import java.util.Date;
 
+@Entity
 public class PagamentoComBoleto extends  Pagamento{
     private static final long serialVersionUID = 1L;
 
@@ -14,6 +16,10 @@ public class PagamentoComBoleto extends  Pagamento{
         super(id, estado, pedido);
         this.dataVencimento = dataVencimento;
         this.dataPagamento = dataPagamento;
+    }
+
+    public PagamentoComBoleto() {
+
     }
 
     public Date getDataVencimento() {
