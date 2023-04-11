@@ -1,6 +1,7 @@
 package com.example.testeando.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
@@ -27,8 +28,8 @@ public class Produto implements Serializable {
                inverseJoinColumns = @JoinColumn(name = "categoria_id")
     )
     private List<Categoria> categorias = new ArrayList<>();
-
-   @OneToMany(mappedBy = "id.produto")
+    @JsonIgnore
+    @OneToMany(mappedBy = "id.produto")
     private Set<ItemPedido> itens = new HashSet<>();
 
     public Produto(){}
@@ -39,14 +40,10 @@ public class Produto implements Serializable {
         this.preco = preco;
     }
 
+    @JsonIgnore
     public List<Pedido> getPedidos(){
         List<Pedido> lista= new ArrayList<>();
         itens.forEach(itemPedido -> lista.add(itemPedido.getPedido()));
-
-//                for (ItemPedido x : itens){
-//            lista.add(x.getPedido());
-//        }
-
         return lista;
 
 

@@ -1,7 +1,7 @@
 package com.example.testeando.resources;
 
-import com.example.testeando.domain.Pessoa;
-import com.example.testeando.services.Pessoaservice;
+import com.example.testeando.domain.Pedido;
+import com.example.testeando.services.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,19 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
-@RequestMapping(value = "/pessoas")
-public class PessoaResouce {
+@RequestMapping(value = "/pedidos")
+public class PedidoResource {
 
     @Autowired
-    private Pessoaservice pessoaservice;
+    private PedidoService service;
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> listar(@PathVariable Integer id){
-        Pessoa obj = pessoaservice.buscar(id);
+        Pedido obj = service.buscar(id);
         return ResponseEntity.ok().body(obj);
     }
-
-
 }
