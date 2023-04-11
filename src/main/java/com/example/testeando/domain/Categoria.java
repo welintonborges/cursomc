@@ -1,10 +1,7 @@
 package com.example.testeando.domain;
 
 
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.springframework.http.ResponseEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,7 +19,6 @@ public class Categoria implements Serializable{
     private Integer id;
     private String nome;
 
-    @JsonManagedReference
     @ManyToMany(mappedBy = "categorias")
     private List<Produto> produtos= new ArrayList<>();
 
