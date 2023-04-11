@@ -35,8 +35,11 @@ public class TesteandoApplication implements CommandLineRunner {
 	private final PedidoRepository pedidoRepository;
 	@Autowired
 	private final PagamentoRepository pagamentoRepository;
+	private final ItemPedidoRepository itemPedidoRepository;
+
 	public TesteandoApplication(CategoriaRepository categoriaRepository, ProdutoRepository produtoRepository, PessoaRepository pessoaRepository,
-								EstadoRepository estadoRepository, CidadeRepository cidadeRepository, ClienteRepository clienteRepository, EnderecoRepository enderecoRepository, PedidoRepository pedidoRepository, PagamentoRepository pagamentoRepository) {
+								EstadoRepository estadoRepository, CidadeRepository cidadeRepository, ClienteRepository clienteRepository, EnderecoRepository enderecoRepository, PedidoRepository pedidoRepository, PagamentoRepository pagamentoRepository,
+								ItemPedidoRepository itemPedidoRepository) {
 		this.categoriaRepository = categoriaRepository;
 		this.produtoRepository = produtoRepository;
 		this.pessoaRepository = pessoaRepository;
@@ -46,6 +49,7 @@ public class TesteandoApplication implements CommandLineRunner {
 		this.enderecoRepository = enderecoRepository;
 		this.pedidoRepository = pedidoRepository;
 		this.pagamentoRepository = pagamentoRepository;
+		this.itemPedidoRepository = itemPedidoRepository;
 	}
 
 	public static void main(String[] args) {
@@ -117,5 +121,18 @@ public class TesteandoApplication implements CommandLineRunner {
 
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 }
