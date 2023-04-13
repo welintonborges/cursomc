@@ -1,8 +1,6 @@
 package com.example.testeando.services;
 
-import com.example.testeando.domain.Cliente;
 import com.example.testeando.domain.Pedido;
-import com.example.testeando.domain.Pessoa;
 import com.example.testeando.exceptions.ObjectNotFoundException;
 import com.example.testeando.repositories.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;

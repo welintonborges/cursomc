@@ -1,7 +1,6 @@
 package com.example.testeando.repositories;
 
 import com.example.testeando.domain.Pagamento;
-import com.example.testeando.domain.Pedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
