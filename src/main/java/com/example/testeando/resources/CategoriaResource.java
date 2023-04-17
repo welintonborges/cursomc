@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.json.async.NonBlockingJsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -26,7 +27,8 @@ public class CategoriaResource {
         return ResponseEntity.ok().body(obj);
     }
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insert(@RequestBody  Categoria obj){
+    public ResponseEntity<Void> insert(@Validated @RequestBody  CategoriaDTO objDto){
+        Categoria obj = service.fromDto(objDto);
         obj = service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return  ResponseEntity.created(uri).build();
