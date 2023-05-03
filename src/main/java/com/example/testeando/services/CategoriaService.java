@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +29,7 @@ public class CategoriaService {
                 "Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
     }
 
+    @Transactional
     public Categoria insert(Categoria obj) {
         obj.setId(null);
         return repo.save(obj);
@@ -45,7 +47,7 @@ public class CategoriaService {
     }
 
     public void delete(Integer id) {
-
+            find(id);
         try {
             repo.deleteById(id);
         }catch (DataIntegrityViolationException e){

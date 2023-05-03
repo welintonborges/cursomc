@@ -5,6 +5,7 @@ import com.example.testeando.dto.ClienteDTO;
 import com.example.testeando.exceptions.DataIntegrityException;
 import com.example.testeando.exceptions.ObjectNotFoundException;
 import com.example.testeando.repositories.ClienteRepository;
+import com.example.testeando.repositories.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +22,9 @@ public class ClienteService {
 
     @Autowired
     private ClienteRepository repo;
+
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     public Cliente find(Integer id){
         Optional<Cliente> obj = repo.findById(id);
@@ -31,8 +36,11 @@ public class ClienteService {
         return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null,null);
     }
 
+    @Transactional
     public Cliente insert(Cliente obj) {
         obj.setId(null);
+        obj = repo.save(obj);
+        enderecoRepository.saveAll(obj.getEnderecos());
         return repo.save(obj);
     }
 
@@ -49,6 +57,7 @@ public class ClienteService {
     }
 
     public void delete(Integer id) {
+        find(id);
         try {
             repo.deleteById(id);
         }catch (DataIntegrityViolationException e){
