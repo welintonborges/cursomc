@@ -1,7 +1,11 @@
 package com.example.testeando.services;
 
+import com.example.testeando.domain.Cidade;
 import com.example.testeando.domain.Cliente;
+import com.example.testeando.domain.Endereco;
+import com.example.testeando.domain.enums.TipoCliente;
 import com.example.testeando.dto.ClienteDTO;
+import com.example.testeando.dto.ClienteNewDTO;
 import com.example.testeando.exceptions.DataIntegrityException;
 import com.example.testeando.exceptions.ObjectNotFoundException;
 import com.example.testeando.repositories.ClienteRepository;
@@ -34,6 +38,23 @@ public class ClienteService {
 
     public Cliente fromDto(ClienteDTO objDto) {
         return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null,null);
+    }
+
+    public  Cliente fromEDTO(ClienteNewDTO objDTO){
+        Cliente cli = new Cliente(null, objDTO.getNome(), objDTO.getEmail(), objDTO.getCpfOuCnpj(), TipoCliente.toEnum(objDTO.getTipo()));
+        Cidade cid = new Cidade(objDTO.getCidadeId(), null, null);
+        Endereco end = new Endereco(null, objDTO.getLogradouro(), objDTO.getNumero(), objDTO.getComplemento(), objDTO.getBairro(), objDTO.getCep(), cli, cid);
+        cli.getEnderecos().add(end);
+        cli.getTelefones().add(objDTO.getTelefone1());
+        if (objDTO.getTelefone2() != null) {
+            cli.getTelefones().add(objDTO.getTelefone2());
+        }
+
+        if (objDTO.getTelefone3() != null) {
+            cli.getTelefones().add(objDTO.getTelefone3());
+        }
+
+        return cli;
     }
 
     @Transactional
@@ -73,4 +94,6 @@ public class ClienteService {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         return repo.findAll(pageRequest);
     }
+
+
 }
