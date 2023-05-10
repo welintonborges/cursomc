@@ -1,5 +1,6 @@
 package com.example.testeando.services.validation;
 
+import com.example.testeando.domain.Cliente;
 import com.example.testeando.domain.enums.TipoCliente;
 import com.example.testeando.dto.ClienteNewDTO;
 import com.example.testeando.exceptions.FieldMessage;
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClienteInsertValidator  {
+public class ClienteInsertValidator {
 
     @Autowired
     private ClienteRepository repo;
@@ -27,6 +28,11 @@ public class ClienteInsertValidator  {
 
         if (objDto.getTipo().equals(TipoCliente.PESSOAFISICA.getCod()) && !BR.isValidCPF(objDto.getCpfOuCnpj())) {
             list.add(new FieldMessage("cpfOuCnpj", "CPF inválido"));
+        }
+
+        Cliente aux = repo.findByEmail(objDto.getEmail());
+        if (aux != null) {
+            list.add(new FieldMessage("email", "E-mail já existentte"));
         }
 
         if (objDto.getTipo().equals(TipoCliente.PESSOAJURIDICA.getCod()) && !BR.isValidCNPJ(objDto.getCpfOuCnpj())) {
@@ -45,4 +51,6 @@ public class ClienteInsertValidator  {
         }
         return list.isEmpty();
     }
+
+
 }
