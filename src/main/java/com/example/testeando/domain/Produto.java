@@ -16,7 +16,6 @@ public class Produto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
-
     private Double preco;
 
     @JsonIgnore
@@ -43,9 +42,6 @@ public class Produto implements Serializable {
         List<Pedido> lista= new ArrayList<>();
         itens.forEach(itemPedido -> lista.add(itemPedido.getPedido()));
         return lista;
-
-
-
     }
     public Integer getId() {
         return id;

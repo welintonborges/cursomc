@@ -17,11 +17,9 @@ public class ClienteInsertValidator {
     @Autowired
     private ClienteRepository repo;
 
-    @Override
     public void initialize(ClienteInsert ann) {
     }
 
-    @Override
     public boolean isValid(ClienteNewDTO objDto) {
 
         List<FieldMessage> list = new ArrayList<>();
